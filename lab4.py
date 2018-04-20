@@ -6,7 +6,6 @@ def charFrequency(text):
 
     for i in range(len(text)):
         pom=text[i]
-
         if(pom not in charCount):
             charCount[pom]=0
         charCount[pom]+=1
@@ -16,6 +15,7 @@ def charFrequency(text):
 
     return charCount
 
+#creates code based on frequency
 def create():
     return 0
 
@@ -44,7 +44,6 @@ def encode(text, code):
 def decode(textBitArray, code):
     decodedText=""
     for i in range(0,len(textBitArray)-6,6):
-        #print(i)
         tmp=bitarray.bitarray()
         arr=[]
         for t in range(i,i+6):  #tmp is 6 neighboring digith that makes binary
@@ -59,40 +58,33 @@ def decode(textBitArray, code):
 #returns key of some value
 def getKey(dict, val):
     for i in dict:
-        print("dict[i] ",dict[i],"val: ",val)
         if(dict[i]==val):
-            return i#dict[i]
+            return i
     return 0
 
 #saves code and encoded text
 def save(text, code):
-    #textFile = open('./encodedFile.txt', 'wb')
     bits = bitarray.bitarray(text)
-    with open('./encodedFile.txt', 'wb') as textFile:
+    with open('./encodedFile.bin', 'wb') as textFile:
         bits.tofile(textFile)
 
     codeFile = open('./code.txt', 'a')
     for i in code:
-        codeFile.write(i+" "+code[i]+"\n")
+        codeFile.write(i+" "+code[i]+" ")
 
-'''
-    bits = bitarray.bitarray(bin='0000011111')  # just an example
 
-    with open('somefile.bin', 'wb') as fh:
-        bits.tofile(fh)
-'''
 #returns coded text and code from file
 def load():
-    #text = open('./encodedFile.txt').read()
     text = bitarray.bitarray()
-    with open('./encodedFile.txt', 'rb') as fh:
+    with open('./encodedFile.bin', 'rb') as fh:
         text.fromfile(fh)
-
 
     codeTmp = open('./code.txt').read()
     code={}
-    for i in range (0,len(codeTmp)-1,2):
-        code[codeTmp[i]]=codeTmp[i+1]
+    array=codeTmp.split(" ")
+
+    for i in range (0,len(array)-1,2):
+        code[array[i]]=array[i+1]
 
     return text, code
 
@@ -106,17 +98,6 @@ def compare(text1, text2):
 
 
 def main():
-    #do zakodown
-    '''
-    code=makeCode()
-    text = 'ala ma kota a kot ma ale'
-    encoded = encode(text, code)
-    decoded = decode(encoded, code)
-    print("ZAKODOWANE:", encoded)
-    print("ODKODOWANE:",decoded)
-    print("CZY DOBRZE:", compare(text,decoded))
-    '''
-
     text = 'ala'
     code = makeCode()
     print("CODE: ", code)
@@ -126,7 +107,7 @@ def main():
     newText, loadedCode = load()
     print("NEW TEXT: ",newText)
     print("LOADED CODE: ", loadedCode)
-    decoded=decode(newText,code) #!!!!ZROBIC Z LOADED CODE
+    decoded=decode(newText,loadedCode) #!!!!ZROBIC Z LOADED CODE
     print("DECODED:", decoded)
     print("CZY DOBRZE:", compare(text, decoded))
 
