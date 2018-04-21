@@ -51,7 +51,7 @@ def decode(textBitArray, code):
             arr=tmp.to01()
 
         strTmp=getKey(code,arr)
-        decodedText=decodedText+strTmp
+        decodedText=decodedText+str(strTmp)
     return decodedText
 
 
@@ -70,7 +70,7 @@ def save(text, code):
 
     codeFile = open('./code.txt', 'a')
     for i in code:
-        codeFile.write(i+" "+code[i]+" ")
+        codeFile.write(i+"\t"+code[i]+"\t")
 
 
 #returns coded text and code from file
@@ -81,7 +81,7 @@ def load():
 
     codeTmp = open('./code.txt').read()
     code={}
-    array=codeTmp.split(" ")
+    array=codeTmp.split("\t")
 
     for i in range (0,len(array)-1,2):
         code[array[i]]=array[i+1]
@@ -98,7 +98,8 @@ def compare(text1, text2):
 
 
 def main():
-    text = 'ala'
+    text = open('./norm_wiki_sample.txt').read()
+    print("TEKST: ",text)
     code = makeCode()
     print("CODE: ", code)
     encoded = encode(text, code)

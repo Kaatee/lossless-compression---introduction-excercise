@@ -1,0 +1,19 @@
+class Program
+{
+static void Main(string[] args)
+{
+Console.WriteLine("Podaj pierwesza liczbe x: ");
+double x = double.Parse(Console.ReadLine());
+Console.WriteLine("Podaj pierwesza liczbe y: ");
+double y = double.Parse(Console.ReadLine());
+String t = oblicz(x, y);
+Console.WriteLine("T = {0}", t);
+}
+static String oblicz(double x, double y)
+{
+if ((y - 3) < 0)
+{
+return "Brak rozwiązania";
+}
+else
+return ((Math.Log(x-5) + 1 )/
